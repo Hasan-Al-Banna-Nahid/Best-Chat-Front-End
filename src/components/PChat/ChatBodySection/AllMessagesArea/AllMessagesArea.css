@@ -1,0 +1,12 @@
+.AllMessagesArea {
+    height: calc(100% - 145px);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow-y: scroll;
+}
+
+.AllMessagesArea__wrapper {
+    height: 100%;
+}

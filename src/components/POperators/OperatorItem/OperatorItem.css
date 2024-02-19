@@ -1,0 +1,42 @@
+.OperatorItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding: 0px;
+}
+
+.OperatorItem__infoWrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.OperatorItem__operatorName {
+    display: block;
+    width: 120px;
+    margin-right: 20px;
+    text-align: left;
+}
+
+.OperatorItem__operatorTg {
+    display: block;
+    width: 120px;
+    margin-right: 20px;
+    text-align: left;
+}
+
+.OperatorItem__operatorWhatsApp {
+    display: block;
+    width: 120px;
+    margin-right: 20px;
+    text-align: left;
+}
+
+.OperatorItem__btnDelete {
+    padding: 2px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 6px;
+}

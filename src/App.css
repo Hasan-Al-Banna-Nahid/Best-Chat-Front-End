@@ -1,0 +1,22 @@
+.App {
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.App > div:nth-child(2) {
+    box-sizing: border-box;
+    margin-top: 70px;
+    padding: 10px 20px 20px 20px;
+    height: calc(100vh - 70px);
+}
+
+.robotoText {
+    font-family: "Roboto", sans-serif;
+}
+
+.linkBtn {
+    text-decoration: none;
+}

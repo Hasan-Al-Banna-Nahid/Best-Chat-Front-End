@@ -1,0 +1,10 @@
+.NewChatSection {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    /* align-items: center; */
+}
+
+.NewChatSection .NewChatSection__element {
+    margin-right: 10px;
+}

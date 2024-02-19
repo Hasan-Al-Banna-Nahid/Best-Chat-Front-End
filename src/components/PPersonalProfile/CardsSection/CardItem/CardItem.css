@@ -1,0 +1,33 @@
+.CardItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding: 0px;
+}
+
+.CardItem__infoWrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.CardItem__cardNumber {
+    display: block;
+    width: 150px;
+    margin-right: 20px;
+}
+
+.CardItem__cardExp {
+    display: block;
+    width: 50px;
+    margin-right: 20px;
+}
+
+.CardItem__btnDelete {
+    padding: 2px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 5px;
+}

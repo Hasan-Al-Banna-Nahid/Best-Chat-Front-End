@@ -1,0 +1,18 @@
+.delete-icon {
+    fill: rgb(206, 83, 83);
+}
+
+.delete-icon__wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3px;
+    transition: 0.4s;
+    cursor: pointer !important;
+}
+
+.delete-icon__wrapper:hover .delete-icon {
+    transform: scale(1.1);
+    transition: 0.3s;
+    fill: rgb(202, 71, 71);
+}

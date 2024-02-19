@@ -1,0 +1,35 @@
+.ChatInfoSection {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px 1px rgb(154 154 204 / 22%);
+    flex-basis: 40%;
+    margin-right: 5px;
+    padding: 10px;
+    font-family: Circular-Std-Book;
+}
+
+.ChatInfoSectionTable {
+    background-color: #fff;
+    border: 1px solid #e6e6f2;
+    border-radius: 2px;
+    color: #3d405c;
+    display: grid;
+    grid-template-columns: 150px 300px;
+    margin: 0 auto;
+    width: -webkit-max-content;
+    width: max-content;
+    }
+
+.ChatInfoSectionTable > div {
+    border: 1px solid #e6e6f2;
+    padding: 10px;
+    color: #3d405c;
+    }
+
+.ChatInfoSectionTable>div:nth-child(2n) {
+        color: #71748d;
+    }
+
+.ChatInfoSectionTable>div:nth-child(1n) {
+    text-transform: uppercase; 
+    }

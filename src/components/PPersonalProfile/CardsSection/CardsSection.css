@@ -1,0 +1,23 @@
+.cardSectionWrapper {
+    width: 640px;
+    margin: 0 auto;
+    padding: 10px;
+    padding-top: 50px;
+}
+
+.cardListTittle {
+    text-align: left;
+    color: rgb(133, 133, 133);
+    padding: 10px 0px;
+}
+
+.cardListFooter {
+    padding-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cardExpTextField {
+    width: 120px;
+}

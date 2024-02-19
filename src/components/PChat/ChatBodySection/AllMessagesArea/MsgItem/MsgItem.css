@@ -1,0 +1,18 @@
+.MsgItem {
+    background-color: #ffc107;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-family: Circular-Std-Book;
+    font-size: 14px;
+    color: #3d405c;
+  }
+
+.MsgItem__TittleRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.MsgItem__TextRow {
+    text-align: left;
+}

@@ -1,0 +1,11 @@
+.CreateNewUserSection {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-content: center;
+    
+}
+
+.CreateNewUserSection .CreateNewUserSection__element {
+    margin-right: 10px;
+}

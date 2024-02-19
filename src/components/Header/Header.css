@@ -1,0 +1,16 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row !important;
+    padding: 0px 20px;
+}
+
+header a {
+    color: white;
+}
+
+ /* KOBA mod */
+header {
+    background-color: #9C27B0 !important
+}

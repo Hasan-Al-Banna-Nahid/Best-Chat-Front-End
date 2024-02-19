@@ -1,0 +1,8 @@
+.AllChatsSection {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    border: 1px solid rgba(224, 224, 224, 1);
+    border-radius: 4px;
+    margin-top: 10px
+}

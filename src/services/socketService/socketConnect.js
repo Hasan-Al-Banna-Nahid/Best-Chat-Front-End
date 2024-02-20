@@ -5,13 +5,12 @@ import io from "socket.io-client";
 const socketConnect = (jwt) => {
   // Remove trailing slash and query string from backURL
 
-  const socketURL = backURL.replace(/\/\?/, "");
+  //   const socketURL = backURL.replace(/\/\?/, "");
 
   if (jwt) {
     // Initialize socket connection with jwtToken query parameter
-    const socket = new io(socketURL, {
+    const socket = io(backURL, {
       query: { jwtToken: jwt },
-      transports: ["websocket"],
     });
 
     // Event listeners for error handling

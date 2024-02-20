@@ -36,11 +36,10 @@ const AllMessagesArea = () => {
 
   useEffect(() => {
     // Create a socket instance
-    const socket = io();
 
     // Listen for "typing" event
     if (isAdmin) {
-      socket.on("typing", (username) => {
+      socket.emit("typing", (username) => {
         // Update UI to display typing indicator
         console.log(`${username} is typing...`);
       });

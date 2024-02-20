@@ -23,13 +23,14 @@ const NewMessageArea = () => {
   const socket = useOutletContext();
 
   const chatId = useSelector((state) => state.ChatReducer.chat._id);
-  const sockett = io();
+  // const sockett = io();
   const userRole = useSelector((state) => state.AuthReducer.user.role);
   const isAdmin = userRole === "ADMIN";
   const handleTyping = (username) => {
     // Emit "typing" event to the server with the username
     if (isAdmin) {
-      sockett.emit("typing", username);
+      console.log("Hint Hitting");
+      socket.emit("typing", username);
     }
   };
   // useEffect(()=>{
@@ -92,10 +93,7 @@ const NewMessageArea = () => {
           rows={2}
           fullWidth={true}
           value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-            handleTyping(); // Call handleTyping function when the user types
-          }}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <Button variant="contained" onClick={sendMessage} disabled={!message}>
           Send

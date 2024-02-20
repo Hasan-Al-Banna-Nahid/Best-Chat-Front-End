@@ -11,7 +11,7 @@ const socketConnect = () => {
     // Initialize socket connection with jwtToken query parameter
     const socket = io(backURL, {
       query: { jwtToken: jwt },
-      transports: ["websocket"],
+      //   transports: ["websocket"],
     });
 
     // Event listeners for error handling

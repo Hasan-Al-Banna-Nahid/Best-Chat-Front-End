@@ -66,7 +66,7 @@ const ChatsSlice = createSlice({
         state.chatsList = action.payload.chatList;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [allChatsThunk.rejected]: (state, action) => {
@@ -86,7 +86,7 @@ const ChatsSlice = createSlice({
         state.chatsList = action.payload.chatsList;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [createNewChatThunk.rejected]: (state, action) => {
@@ -106,7 +106,7 @@ const ChatsSlice = createSlice({
         state.chatsList = action.payload.chatsList;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [deleteChatThunk.rejected]: (state, action) => {
@@ -132,7 +132,7 @@ const ChatsSlice = createSlice({
         state.chatsList[indexOfChangedChatId] = action.payload.chat;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [addUsersArrToChatThunk.rejected]: (state, action) => {

@@ -1,7 +1,7 @@
 import { backURL } from "../../common/config";
 import io from "socket.io-client";
 
-const socketConnect = (jwt) => {
+const socketConnect = () => {
   // const socket = await io.connect(backURL)
   const jwt = localStorage.getItem("jwt");
   if (jwt) {

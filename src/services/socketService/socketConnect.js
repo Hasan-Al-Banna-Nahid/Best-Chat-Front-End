@@ -3,6 +3,8 @@ import io from "socket.io-client";
 
 const socketConnect = (jwt) => {
   // Remove trailing slash and query string from backURL
+  const socket = io("ws://https://bestchat-five.vercel.app"); // Replace with your WebSocket endpoint URL
+
   const socketURL = backURL.replace(/\/\?/, "");
 
   if (jwt) {

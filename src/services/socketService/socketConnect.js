@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { backURL } from "../../common/config";
 import io from "socket.io-client";
 
@@ -8,7 +9,7 @@ const socketConnect = (jwt) => {
 
   if (jwt) {
     // Initialize socket connection with jwtToken query parameter
-    const socket = io(socketURL, {
+    const socket = new io(socketURL, {
       query: { jwtToken: jwt },
       transports: ["websocket"],
     });

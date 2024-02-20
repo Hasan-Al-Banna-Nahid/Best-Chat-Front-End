@@ -4,7 +4,7 @@ import io from "socket.io-client";
 const socketConnect = (jwt) => {
   // const socket = await io.connect(backURL)
   //   const jwt = localStorage.getItem("jwt");
-  const socketURL = backURL.replace(/\/\?/, "?");
+  const socketURL = backURL.replace(/\/\?/, "");
 
   if (jwt) {
     const socket = io(socketURL, {

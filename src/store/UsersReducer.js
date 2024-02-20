@@ -70,7 +70,7 @@ const UsersSlice = createSlice({
         state.usersList = action.payload.usersList;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [usersThunk.rejected]: (state, action) => {
@@ -91,7 +91,7 @@ const UsersSlice = createSlice({
         state.usersList = action.payload.users;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [deleteUserThunk.rejected]: (state, action) => {
@@ -112,7 +112,7 @@ const UsersSlice = createSlice({
         state.usersList = action.payload.users;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [createNewUserThunk.rejected]: (state, action) => {
@@ -133,7 +133,7 @@ const UsersSlice = createSlice({
         state.usersList = action.payload.users;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [updateUserRoleThunk.rejected]: (state, action) => {

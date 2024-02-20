@@ -2,9 +2,8 @@ import { useEffect } from "react";
 import { backURL } from "../../common/config";
 import io from "socket.io-client";
 
-const socketConnect = () => {
+const socketConnect = (jwt) => {
   // Remove trailing slash and query string from backURL
-  const jwt = localStorage.getItem("jwt");
   //   const socketURL = backURL.replace(/\/\?/, "");
 
   if (jwt) {

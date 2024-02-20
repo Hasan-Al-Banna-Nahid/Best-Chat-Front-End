@@ -4,8 +4,8 @@ import sendRegisterData from "./sendRegisterData";
 import updatePersonalBaseInfo from "../usersService/updatePersonalBaseInfo";
 
 export const authService = {
-    sendLoginData: sendLoginData,
-    sendRegisterData: sendRegisterData,
-    checkJwt: checkJwt,
-    updatePersonalBaseInfo: updatePersonalBaseInfo,
+  sendLoginData: sendLoginData,
+  sendRegisterData: sendRegisterData,
+  // checkJwt: checkJwt,
+  updatePersonalBaseInfo: updatePersonalBaseInfo,
 };

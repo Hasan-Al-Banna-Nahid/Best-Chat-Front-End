@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import useSocketConnect from "../../utils/useSocketConnect";
 const Layout = () => {
-  useSocketConnect();
+  // useSocketConnect();
   const isErrorAuth = useSelector((state) => state.AuthReducer.error);
   const isErrorChat = useSelector((state) => state.ChatReducer.error);
   const jwt = useSelector((state) => state.AuthReducer.jwt);

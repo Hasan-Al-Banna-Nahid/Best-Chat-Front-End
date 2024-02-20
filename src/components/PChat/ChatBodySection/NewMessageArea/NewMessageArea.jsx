@@ -38,7 +38,7 @@ const NewMessageArea = () => {
 
   const sendMessage = () => {
     console.log("Send Message Hit", message, chatId);
-    socket.emit("sendMessage", {
+    sockett.io("sendMessage", {
       message: message,
       chatId: chatId,
     });

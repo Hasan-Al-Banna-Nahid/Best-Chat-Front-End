@@ -8,7 +8,7 @@ const socketDisconnect = async (socket) => {
     await socket.emit("disconnectThisSocket", socket.id);
   }
 
-  await socket.disconnect();
+  // await socket.disconnect();
 };
 
 export default socketDisconnect;

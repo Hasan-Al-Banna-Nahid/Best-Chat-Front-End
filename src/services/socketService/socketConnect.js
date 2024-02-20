@@ -7,6 +7,7 @@ const socketConnect = () => {
   if (jwt) {
     const socket = io(backURL, {
       query: { jwtToken: jwt },
+      transports: ["websocket"], // Explicitly specify the transport to use
     });
     console.log("this is socketConnect----");
     return socket;

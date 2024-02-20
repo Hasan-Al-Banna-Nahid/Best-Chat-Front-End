@@ -37,6 +37,7 @@ const NewMessageArea = () => {
   // },[fileData])
 
   const sendMessage = () => {
+    console.log("Send Message Hit", message, chatId);
     socket.emit("sendMessage", {
       message: message,
       chatId: chatId,

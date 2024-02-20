@@ -11,8 +11,11 @@ const socketConnect = (jwt) => {
     const socket = io(backURL, {
       //   transports: ["websocket"],
       query: { jwtToken: jwt },
-      transports: ["websocket"],
+      transports: ["websocket", "polling"],
       timeout: 100000000,
+      path: "/socket",
+      reconnectionAttempts: 5,
+      reconnection: true,
     });
 
     // Event listeners for error handling

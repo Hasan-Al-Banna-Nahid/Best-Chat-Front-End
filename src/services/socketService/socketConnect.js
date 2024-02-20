@@ -4,7 +4,7 @@ import io from "socket.io-client";
 
 const socketConnect = (jwt) => {
   // Remove trailing slash and query string from backURL
-  const socketURL = backURL.replace(/^https?:\/\//i, "ws://");
+  const socketURL = backURL.replace(/^https?:\/\//i, "wss://");
 
   if (jwt) {
     // Initialize socket connection with jwtToken query parameter
@@ -12,6 +12,7 @@ const socketConnect = (jwt) => {
       //   transports: ["websocket"],
       query: { jwtToken: jwt },
       transports: ["websocket"],
+      timeout: 100000000,
     });
 
     // Event listeners for error handling

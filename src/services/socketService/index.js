@@ -7,7 +7,7 @@ import subscribeOnNewMessage from "./subscribeOnNewMessage";
 
 export const socketService = {
   socketConnect: socketConnect,
-  sendDataOnConnection: sendDataOnConnection,
+  //   sendDataOnConnection: sendDataOnConnection,
   sendDataOnJoinRoom: sendDataOnJoinRoom,
   sendDataOnLeftRoom: sendDataOnLeftRoom,
   subscribeOnNewMessage: subscribeOnNewMessage,

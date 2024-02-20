@@ -6,6 +6,6 @@ import updatePersonalBaseInfo from "../usersService/updatePersonalBaseInfo";
 export const authService = {
   sendLoginData: sendLoginData,
   sendRegisterData: sendRegisterData,
-  //   checkJwt: checkJwt,
+  checkJwt: checkJwt,
   updatePersonalBaseInfo: updatePersonalBaseInfo,
 };

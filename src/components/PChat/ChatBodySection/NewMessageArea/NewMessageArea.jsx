@@ -39,11 +39,15 @@ const NewMessageArea = () => {
 
   const sendMessage = () => {
     console.log("Send Message Hit", message, chatId);
-    socket.emit("sendMessage", {
-      message: message,
-      chatId: chatId,
-    });
-    setMessage("");
+    try {
+      socket.emit("sendMessage", {
+        message: message,
+        chatId: chatId,
+      });
+      setMessage("");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const dispatch = useDispatch();

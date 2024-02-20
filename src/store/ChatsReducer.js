@@ -60,7 +60,7 @@ const ChatsSlice = createSlice({
     [allChatsThunk.fulfilled]: (state, action) => {
       console.log("allChatsThunk fulfilled");
       state.loading = false;
-      if (action.payload.status == 200) {
+      if (action.payload?.status == 200) {
         // console.log("status 200");
         // console.log(action.payload);
         state.chatsList = action.payload.chatList;
@@ -81,7 +81,7 @@ const ChatsSlice = createSlice({
     [createNewChatThunk.fulfilled]: (state, action) => {
       console.log("createNewChatThunk fulfilled");
       state.loading = false;
-      if (action.payload.status == 200) {
+      if (action.payload?.status == 200) {
         console.log(action.payload);
         state.chatsList = action.payload.chatsList;
         state.error = null;
@@ -101,7 +101,7 @@ const ChatsSlice = createSlice({
     [deleteChatThunk.fulfilled]: (state, action) => {
       console.log("createNewChatThunk fulfilled");
       state.loading = false;
-      if (action.payload.status == 200) {
+      if (action.payload?.status == 200) {
         console.log(action.payload);
         state.chatsList = action.payload.chatsList;
         state.error = null;
@@ -121,7 +121,7 @@ const ChatsSlice = createSlice({
     [addUsersArrToChatThunk.fulfilled]: (state, action) => {
       console.log("addUsersArrToChat fulfilled");
       state.loading = false;
-      if (action.payload.status == 200) {
+      if (action.payload?.status == 200) {
         console.log(action.payload);
         const changedChatId = action.payload.chat._id;
         console.log(changedChatId);

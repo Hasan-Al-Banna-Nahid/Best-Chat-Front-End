@@ -24,8 +24,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/login/:authKey/chats/:chatId" element={<FastLogin />} />
-        <Route path="/">
-          {/* element={<AuthProtectedLayout />} */}
+        <Route path="/" element={<AuthProtectedLayout />}>
           {/* { private routes to certain user} */}
           <Route path="/" element={<Home />} />
           <Route path="chats" element={<Chats />} />

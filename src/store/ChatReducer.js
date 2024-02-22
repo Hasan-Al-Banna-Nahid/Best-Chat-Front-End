@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk, createThunk } from "@reduxjs/toolkit";
 
 import { chatsService } from "../services/chatsService";
+import { backURL } from "../common/config";
 
 export const getChatThunk = createAsyncThunk(
   "chatReducer/getChatThunk",
@@ -9,6 +10,15 @@ export const getChatThunk = createAsyncThunk(
     console.log(chatId);
     const data = await chatsService.getChat(chatId);
     return data;
+  }
+);
+
+export const pinMessage = createAsyncThunk(
+  "chatReducer/pinMessage",
+  async function (messageId) {
+    const pinnedMessage = await chatsService.pinMessage(messageId);
+
+    return pinnedMessage;
   }
 );
 
@@ -39,7 +49,17 @@ const ChatSlice = createSlice({
     },
     PushLastMessageReducer(state, action) {
       console.log(action);
-      state.chat.messages.push(action.payload);
+      state?.chat.messages.push(action.payload);
+    },
+    pinMessageReducer(state, action) {
+      console.log(action);
+      state?.chat.messages.push(action.payload);
+
+      state.chat.messages = state.chat.messages.map((message) =>
+        message._id === action.payload._id
+          ? { ...message, pinned: true }
+          : message
+      );
     },
   },
   extraReducers: {
@@ -54,11 +74,11 @@ const ChatSlice = createSlice({
       if (action.payload?.status === 200) {
         // console.log("status 200");
         // console.log(action.payload);
-        state.chat = action.payload.chat;
+        state.chat = action.payload?.chat;
         state.error = null;
       } else {
         console.log(action.payload);
-        state.error = action.payload.chat.message;
+        state.error = action.payload?.chat.message;
       }
     },
     [getChatThunk.rejected]: (state, action) => {
@@ -74,13 +94,13 @@ const ChatSlice = createSlice({
       console.log("getFileThunk fulfilled");
       state.loading = false;
       if (action.payload?.status === 200) {
-        let needMessagePlace = state.chat.messages.findIndex(
+        let needMessagePlace = state?.chat.messages.findIndex(
           (message) => message._id === action.payload.messageId
         );
         state.chat.messages[needMessagePlace].file = action.payload.file;
         state.error = null;
       } else {
-        state.error = action.payload.message;
+        state.error = action.payload?.message;
       }
     },
     [getFileThunk.rejected]: (state, action) => {

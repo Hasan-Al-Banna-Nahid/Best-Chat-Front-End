@@ -30,19 +30,20 @@ const NewMessageArea = () => {
     // Emit "typing" event to the server with the username
     if (isAdmin) {
       console.log("Hint Hitting");
-      socket.emit("typing", username);
+      socket.on("typing", username);
     }
   };
   // useEffect(()=>{
   //     console.log(fileData)
   // },[fileData])
-
+  const pinned = localStorage.getItem("pinMessage");
   const sendMessage = () => {
-    console.log("Send Message Hit", message, chatId);
+    console.log("Send Message Hit", message, chatId, pinned);
     try {
       socket.emit("sendMessage", {
         message: message,
         chatId: chatId,
+        // pinned: pinned,
       });
       setMessage("");
     } catch (error) {

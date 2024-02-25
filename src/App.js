@@ -23,7 +23,8 @@ function App() {
         {/* { public routes} */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="/login/:authKey/chats/:chatId" element={<FastLogin />} />
+        {/* <Route path="/login/:authKey/chats/:chatId" element={<FastLogin />} /> */}
+        <Route path="/login/:authKey/:chatId/chats" element={<FastLogin />} />
         <Route path="/" element={<AuthProtectedLayout />}>
           {/* { private routes to certain user} */}
           <Route path="/" element={<Home />} />

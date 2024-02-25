@@ -197,7 +197,7 @@ const AllMessagesArea = ({ msg, chatParam }) => {
     <div className="AllMessagesArea">
       <ToastContainer />
       <div className="AllMessagesArea__wrapper ">
-        {pinnedMessage && pinnedMessage?.chat == chatId && (
+        {isAdmin && pinnedMessage && pinnedMessage?.chat == chatId && (
           <div
             className={`${
               pinnedMessage?.text ? "pinned-message-container" : ""
@@ -216,7 +216,7 @@ const AllMessagesArea = ({ msg, chatParam }) => {
             allMsgs.map((msg) => (
               <div
                 className={`message-container ${
-                  msg.text == pinnedMessage?.text
+                  isAdmin && msg.text == pinnedMessage?.text
                     ? "border-2 border-blue-700 p-4 my-2 rounded-sm"
                     : ""
                 }`}
@@ -225,7 +225,7 @@ const AllMessagesArea = ({ msg, chatParam }) => {
                 key={msg._id}
                 id={msg._id} // Add an id to the message container
               >
-                {msg.text == pinnedMessage?.text && (
+                {isAdmin && msg.text == pinnedMessage?.text && (
                   <h2 className="pinned-message-label text-xl font-bold text-purple-700 my-2">
                     Pinned Message
                   </h2>

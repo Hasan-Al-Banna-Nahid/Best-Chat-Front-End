@@ -17,13 +17,15 @@ const FastLogin = () => {
   const isAuth = useSelector((state) => state.AuthReducer.isAuth);
   const navigate = useNavigate();
   useEffect(() => {
-    if (isAuth) {
-      navigate(`/chats/${chatId}`);
-    }
-  }, [isAuth]);
-  useEffect(() => {
     dispatch(loginThunk({ pass }));
   }, []);
+  useEffect(() => {
+    if (isAuth) {
+      navigate(`/chats/${chatId}`);
+    } else {
+      navigate("/login");
+    }
+  }, [isAuth]);
 
   console.log(chatId);
   return <div className="FastLogin"></div>;

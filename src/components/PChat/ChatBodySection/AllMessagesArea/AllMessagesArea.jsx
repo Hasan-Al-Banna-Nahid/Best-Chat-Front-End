@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // store
 import { createNewChatThunk } from "../../../../store/ChatsReducer";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 //service
 import { socketService } from "../../../../services/socketService";
 import { useEffect, useRef, useState } from "react";
@@ -15,7 +15,8 @@ import { io } from "socket.io-client";
 import { pinMessage } from "../../../../store/ChatReducer";
 import PinnedMessage from "./PinnedMessage";
 import { ToastContainer, toast } from "react-toastify";
-const AllMessagesArea = ({ msg }) => {
+import getChat from "../../../../services/chatsService/getChat";
+const AllMessagesArea = ({ msg, chatParam }) => {
   const [hoveredMessageId, setHoveredMessageId] = useState(null);
   const [clickedPinnedMessageId, setClickedPinnedMessageId] = useState(null);
   const dispatch = useDispatch();
@@ -25,13 +26,9 @@ const AllMessagesArea = ({ msg }) => {
   const userRole = useSelector((state) => state.AuthReducer.user.role);
   const isAdmin = userRole === "ADMIN";
   let [pinnedMessage, setPinnedMessage] = useState([]);
-
-  const pinId = pinnedMessage.map((pin) => {
-    return pin.id;
-  });
-  const pinText = pinnedMessage.map((pin) => {
-    return pin.id;
-  });
+  const chatId = useSelector((state) => state.ChatReducer.chat._id);
+  const jwt = localStorage.getItem("jwt");
+  const baseURL = process.env.REACT_APP_BACKURL;
 
   useEffect(() => {
     socketService.subscribeOnNewMessage(socket, dispatch);
@@ -64,59 +61,84 @@ const AllMessagesArea = ({ msg }) => {
       socket.disconnect(); // Disconnect the socket when the component unmounts
     };
   }, []); // Ensure this effect runs only once
-
-  const chatId = useSelector((state) => state.ChatReducer.chat._id);
-  const jwt = localStorage.getItem("jwt");
+  const handleUnpinMessage = () => {
+    console.log(chatId);
+    fetch(`${baseURL}/chats/${chatId}/deletePin`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          toast.success("Deleted Pin Message");
+        }
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+        return;
+      });
+  };
+  const pinIds = pinnedMessage?.chat;
+  console.log(pinnedMessage);
   const handlePinMessage = async (messageId) => {
     dispatch(pinMessage(messageId));
-    const messageToPin = allMsgs.find((msg) => msg._id === messageId);
-
-    // Store the entire pinned message object in the state
-    // setPinnedMessage(messageToPin);
-
-    // Store only the text of the pinned message in localStorage
-    if (localStorage.getItem("pinMessage") === messageToPin.text) {
-      toast.error("Already Pinned");
+    const messageToPin = allMsgs.find((msg) => msg._id == messageId);
+    // console.log("msgId", chatId === pinIds);
+    // Send Pin Message
+    if (pinIds !== chatId) {
+      await fetch(`${baseURL}/chats/${chatId}/sendPinMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({
+          pinned: messageToPin.text,
+          id: messageToPin._id,
+        }),
+      }).then(async (res) => {
+        await res.json();
+        console.log(res);
+        // toast.success("Pin Message Saved");
+        window.location.reload();
+      });
     } else {
-      toast.success("Pinned Successfully");
-    }
-    if (messageToPin) {
-      try {
-        const response = await fetch(
-          `${baseURL}/chats/${chatId}/sendPinMessage`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${jwt}`,
-            },
-            body: JSON.stringify({
-              pinned: messageToPin.text,
-              id: messageToPin,
-            }), // Use 'pinned' instead of 'message'
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          toast.success("Pinned Message Saved To DB");
-          console.log(data); // Check response data for confirmation
-          // Update state or perform any other necessary actions based on response
+      await fetch(`${baseURL}/chats/${chatId}/updatePin`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({
+          pinned: messageToPin.text,
+          ids: messageToPin._id,
+        }),
+      }).then(async (res) => {
+        await res.json();
+        if (res.ok) {
+          console.log(res);
           window.location.reload();
-        } else {
-          toast.error("Failed to save pinned message");
-          console.error("Error:", response.status);
         }
-      } catch (error) {
-        console.log(error.message);
-      }
+      });
     }
+
+    // Update Pin Message
+
+    // if (pinId == messageToPin.id) {
+    //   toast.error("Already Pinned");
+    // } else {
+    //   toast.success("Pinned Successfully");
+    // }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       console.log(chatId);
       try {
-        const response = await fetch(`${baseURL}/chats/pin`, {
+        const response = await fetch(`${baseURL}/chats/${chatId}/pin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -127,7 +149,7 @@ const AllMessagesArea = ({ msg }) => {
         if (response.ok) {
           const data = await response.json();
           console.log("getPin", data);
-          setPinnedMessage(data);
+          setPinnedMessage(data); // Update pinnedMessage state with new data
         } else {
           console.error("Error:", response.status);
         }
@@ -137,7 +159,8 @@ const AllMessagesArea = ({ msg }) => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run the effect only once
+  }, [chatId, jwt, baseURL]); // Ensure useEffect runs when chatId, jwt, or baseURL changes
+  // Empty dependency array to run the effect only once
 
   const handleMouseEnter = (messageId) => {
     setHoveredMessageId(messageId);
@@ -147,27 +170,45 @@ const AllMessagesArea = ({ msg }) => {
     setHoveredMessageId(null);
   };
 
-  const handlePinnedMessageClick = () => {
-    if (pinId) {
-      const pinnedMessageRef = document.getElementById(pinId);
-      if (pinnedMessageRef) {
-        pinnedMessageRef.scrollIntoView({ behavior: "smooth" });
+  const handlePinClickMessage = () => {
+    if (pinnedMessage && pinnedMessage.text) {
+      const pinnedMessageText = pinnedMessage.text;
+
+      // Find the message with the pinned text
+      const pinnedMessageItem = allMsgs.find(
+        (msg) => msg.text === pinnedMessageText
+      );
+
+      if (pinnedMessageItem) {
+        const pinnedMessageId = pinnedMessageItem._id;
+
+        // Scroll to the pinned message
+        const pinnedMessageRef = document.getElementById(pinnedMessageId);
+        if (pinnedMessageRef) {
+          pinnedMessageRef.scrollIntoView({ behavior: "smooth" });
+        }
       }
     }
   };
 
-  const baseURL = process.env.REACT_APP_BACKURL;
+  // && pinMessageFromDB == chatId &&
 
   return (
     <div className="AllMessagesArea">
       <ToastContainer />
       <div className="AllMessagesArea__wrapper ">
-        {pinId && (
+        {pinnedMessage && pinnedMessage?.chat == chatId && (
           <div
-            className={`${pinText ? "pinned-message-container" : ""}`}
-            onClick={handlePinnedMessageClick}
+            className={`${
+              pinnedMessage?.text ? "pinned-message-container" : ""
+            }`}
+            onClick={handlePinClickMessage}
           >
-            <PinnedMessage msg={pinnedMessage} pinMessage={setPinnedMessage} />
+            <PinnedMessage
+              msg={pinnedMessage}
+              pinMessage={setPinnedMessage}
+              onUnpinMessage={handleUnpinMessage}
+            />
           </div>
         )}
         <div className="mt-20">
@@ -175,8 +216,8 @@ const AllMessagesArea = ({ msg }) => {
             allMsgs.map((msg) => (
               <div
                 className={`message-container ${
-                  msg._id == (pinText && pinId)
-                    ? "border-2 border-blue-800 p-4 text-2xl rounded-lg my-4"
+                  msg.text == pinnedMessage?.text
+                    ? "border-2 border-blue-700 p-4 my-2 rounded-sm"
                     : ""
                 }`}
                 onMouseEnter={() => handleMouseEnter(msg._id)}
@@ -184,8 +225,8 @@ const AllMessagesArea = ({ msg }) => {
                 key={msg._id}
                 id={msg._id} // Add an id to the message container
               >
-                {msg._id == (pinText && pinId) && (
-                  <h2 className="link link-primary no-underline font-bold my-2">
+                {msg.text == pinnedMessage?.text && (
+                  <h2 className="pinned-message-label text-xl font-bold text-purple-700 my-2">
                     Pinned Message
                   </h2>
                 )}
@@ -197,7 +238,7 @@ const AllMessagesArea = ({ msg }) => {
                       handlePinMessage(msg._id);
                       // sendPinMessage();
                     }}
-                    disabled={msg._id == (pinText && pinId)}
+                    disabled={pinnedMessage?.text == msg.text}
                   >
                     Pin
                   </button>

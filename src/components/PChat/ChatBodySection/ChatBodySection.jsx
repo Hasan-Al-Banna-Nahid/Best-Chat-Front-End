@@ -10,17 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 // store
 import { createNewChatThunk } from "../../../store/ChatsReducer";
 
+const ChatBodySection = ({ chatParam }) => {
+  const dispatch = useDispatch();
 
-
-const ChatBodySection = () => {
-    const dispatch = useDispatch();
-
-    return (
-        <div className="ChatBodySection">
-            <AllMessagesArea/>
-            <NewMessageArea/>
-        </div>
-    );
+  return (
+    <div className="ChatBodySection">
+      <AllMessagesArea chatParam={chatParam} />
+      <NewMessageArea />
+    </div>
+  );
 };
 
 export default ChatBodySection;

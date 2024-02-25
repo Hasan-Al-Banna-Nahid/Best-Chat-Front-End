@@ -23,6 +23,8 @@ const ChatInfoSection = () => {
     navigator.clipboard.writeText(chatRoomLink);
     setCopied(true);
   };
+  const userRole = useSelector((state) => state.AuthReducer.user.role);
+  const isAdmin = userRole === "ADMIN";
   return (
     <div className="ChatInfoSection">
       <div className="ChatInfoSectionTable">
@@ -37,22 +39,24 @@ const ChatInfoSection = () => {
             : null}
         </div>
       </div>
-      <div>
-        <div className="w-[400px]">
-          <TextField
-            fullWidth
-            className="w-[400px]"
-            variant="outlined"
-            value={chatRoomLink}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-          <Button onClick={copyToClipboard} variant="contained">
-            {copied ? "Copied!" : "Copy Link"}
-          </Button>
+      {isAdmin && (
+        <div>
+          <div className="w-[400px]">
+            <TextField
+              fullWidth
+              className="w-[400px]"
+              variant="outlined"
+              value={chatRoomLink}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+            <Button onClick={copyToClipboard} variant="contained">
+              {copied ? "Copied!" : "Copy Link"}
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

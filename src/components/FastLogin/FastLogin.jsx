@@ -9,12 +9,13 @@ const FastLogin = () => {
   const dispatch = useDispatch();
 
   let params = useParams();
-  const { authKey, chatId } = params;
+  const { authKey } = params;
   console.log(authKey);
   console.log(chatId);
   const pass = authKey;
 
   const isAuth = useSelector((state) => state.AuthReducer.isAuth);
+  const chatId = useSelector((state) => state.ChatReducer.chat._id);
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(loginThunk({ pass }));
@@ -24,6 +25,7 @@ const FastLogin = () => {
       navigate(`/chats/${chatId}`);
     } else {
       navigate("/login");
+      window.location.reload();
     }
   }, [isAuth]);
 
